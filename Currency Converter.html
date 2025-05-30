@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Currency Converter</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #e0f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      width: 600px;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #00796b;
+      font-size: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #00796b;
+      font-size: 16px;
+    }
+
+    .input-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    select, input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #00796b;
+      background-color: #f1f8e9;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background-color: #00796b;
+      border: none;
+      color: white;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    .result-box {
+      width: 48%;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid #00796b;
+      background-color: #e0f7fa;
+      color: #004d40;
+      font-weight: bold;
+      text-align: center;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><strong>Currency Converter</strong></h1>
+
+    <div class="form-group">
+      <label for="fromCurrency">From:</label>
+      <select id="fromCurrency">
+        <option value="USD">$ - US Dollar</option>
+        <option value="EUR">€ - Euro</option>
+        <option value="GBP">£ - British Pound</option>
+        <option value="INR">₹ - Indian Rupee</option>
+        <option value="JPY">¥ - Japanese Yen</option>
+        <option value="AUD">A$ - Australian Dollar</option>
+        <option value="CAD">C$ - Canadian Dollar</option>
+        <option value="CHF">CHF - Swiss Franc</option>
+        <option value="CNY">¥ - Chinese Yuan</option>
+        <option value="MXN">MX$ - Mexican Peso</option>
+        <option value="BRL">R$ - Brazilian Real</option>
+        <option value="ZAR">R - South African Rand</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="toCurrency">To:</label>
+      <select id="toCurrency">
+        <option value="INR">₹ - Indian Rupee</option>
+        <option value="USD">$ - US Dollar</option>
+        <option value="EUR">€ - Euro</option>
+        <option value="GBP">£ - British Pound</option>
+        <option value="JPY">¥ - Japanese Yen</option>
+        <option value="AUD">A$ - Australian Dollar</option>
+        <option value="CAD">C$ - Canadian Dollar</option>
+        <option value="CHF">CHF - Swiss Franc</option>
+        <option value="CNY">¥ - Chinese Yuan</option>
+        <option value="MXN">MX$ - Mexican Peso</option>
+        <option value="BRL">R$ - Brazilian Real</option>
+        <option value="ZAR">R - South African Rand</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="amount">Enter the Amount:</label>
+      <div class="input-container">
+        <input type="number" id="amount" placeholder="e.g., 100" />
+        <div id="convertedAmount" class="result-box">0.00</div>
+      </div>
+    </div>
+
+    <button onclick="convertCurrency()">Convert</button>
+
+  </div>
+
+  <script>
+    const exchangeRates = {
+      USD: 1.00,
+      EUR: 0.93,
+      GBP: 0.80,
+      INR: 83.10,
+      JPY: 155.25,
+      AUD: 1.52,
+      CAD: 1.36,
+      CHF: 0.91,
+      CNY: 7.15,
+      MXN: 17.60,
+      BRL: 5.12,
+      ZAR: 19.50
+    };
+
+    const currencySymbols = {
+      USD: "$",
+      EUR: "€",
+      GBP: "£",
+      INR: "₹",
+      JPY: "¥",
+      AUD: "A$",
+      CAD: "C$",
+      CHF: "CHF",
+      CNY: "¥",
+      MXN: "MX$",
+      BRL: "R$",
+      ZAR: "R"
+    };
+
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const from = document.getElementById("fromCurrency").value;
+      const to = document.getElementById("toCurrency").value;
+      const convertedAmountBox = document.getElementById("convertedAmount");
+
+      if (isNaN(amount) || amount <= 0) {
+        convertedAmountBox.innerText = "0.00";
+        return;
+      }
+
+      const amountInUSD = amount / exchangeRates[from];
+      const convertedAmount = amountInUSD * exchangeRates[to];
+      const symbol = currencySymbols[to] || "";
+
+      convertedAmountBox.innerText = `${symbol}${convertedAmount.toFixed(4)}`;
+    }
+  </script>
+</body>
+</html>
